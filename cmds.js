@@ -142,9 +142,11 @@ exports.playCmd = rl => {
                     log(`Llevas ${score} aciertos`);
                     playOne();
                 } else {
-                    log(`Error`);
+                    log("\nRespuesta incorrecta\n");
+                    log(`Fin del juego`);
                     log(`Número de aciertos:`);
                     biglog(`${score}`);
+                    log("Pruebe de nuevo\n");
                     rl.prompt();
                 }
 
