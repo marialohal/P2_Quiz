@@ -91,21 +91,16 @@ exports.testCmd = (rl,id) =>{
     }else{
         try{
             const quiz = model.getByIndex(id);
-            rl.question(colorize(`${quiz.question}? =>`, 'red'), resp => {
-                let rightAnswer = RegExp(quiz.answer, 'i');
-                const theAnswers = resp.match(rightAnswer);
-                if(theAnswers == null){
-                    biglog(`INCORRECTO`, 'red');
-                }else if((theAnswers[0].replace(rightAnswer,quiz.answer).toLowerCase().trim()) === (quiz.answer.toLowerCase().trim())){
+            rl.question(colorize(`${quiz.question}? =>`, 'red'), answer => {
+                const resp = (answer || "").toLocaleLowerCase().trim();
+                if(resp == quiz.answer.toLocaleLowerCase()){
                     log(`Su respuesta es:`) ;
                     biglog('CORRECTO' , 'green');
-
                 }else{
                     log(`Su respuesta es:`) ;
                     biglog('INCORRECTO' , 'red');
-
+                    rl.prompt();
                 }
-                rl.prompt();
             });
 
 
@@ -138,7 +133,7 @@ exports.playCmd = rl => {
             toBeResolved.splice(aleat, 1);
             rl.question(colorize(`${quiz.question}? =>`, 'red'), resp => {
                 if ((resp.toLowerCase().trim()) === (quiz.answer.toLowerCase().trim())) {
-                    score++;
+                    score= score + 1;
                     log(`Llevas ${score} aciertos`);
                     playOne();
                 } else {
